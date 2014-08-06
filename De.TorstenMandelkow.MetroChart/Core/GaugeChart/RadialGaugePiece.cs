@@ -65,6 +65,14 @@
             DependencyProperty.Register("AnimatedValue", typeof(double), typeof(RadialGaugePiece),
             new PropertyMetadata(0.0, OnAnimatedValueChanged));
 
+        public static readonly DependencyProperty MaximumProperty =
+            DependencyProperty.Register("Maximum", typeof(double), typeof(RadialGaugePiece),
+            new PropertyMetadata(100.0, new PropertyChangedCallback(UpdatePie)));
+
+        public static readonly DependencyProperty MinimumProperty =
+            DependencyProperty.Register("Minimum", typeof(double), typeof(RadialGaugePiece),
+            new PropertyMetadata(0.0, new PropertyChangedCallback(UpdatePie)));
+
         public static readonly DependencyProperty FormattedAnimatedValueProperty =
             DependencyProperty.Register("FormattedAnimatedValue", typeof(string), typeof(RadialGaugePiece),
             new PropertyMetadata(null));
@@ -278,6 +286,18 @@
             set { SetValue(AnimatedValueProperty, value); }
         }
 
+        public double Minimum
+        {
+            get { return (double)GetValue(MinimumProperty); }
+            set { SetValue(MinimumProperty, value); }
+        }
+
+        public double Maximum
+        {
+            get { return (double)GetValue(MaximumProperty); }
+            set { SetValue(MaximumProperty, value); }
+        }
+
         public double FormattedAnimatedValue
         {
             get { return (double)GetValue(FormattedAnimatedValueProperty); }
@@ -317,9 +337,9 @@
                 {
                     return;
                 }
-                
-                double m_startpercent = 0;
-                double m_endpercent = AnimatedValue; // Value;
+
+                double m_startpercent = Minimum;
+                double m_endpercent = (AnimatedValue / Maximum) * 100; // Value;
 
                 Point center = GetCenter();
 
