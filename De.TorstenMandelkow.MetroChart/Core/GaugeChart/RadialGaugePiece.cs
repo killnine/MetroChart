@@ -73,6 +73,10 @@
             DependencyProperty.Register("Minimum", typeof(double), typeof(RadialGaugePiece),
             new PropertyMetadata(0.0, new PropertyChangedCallback(UpdatePie)));
 
+        public static readonly DependencyProperty UnitProperty =
+            DependencyProperty.Register("Unit", typeof(string), typeof(RadialGaugePiece),
+            new PropertyMetadata("%"));
+
         public static readonly DependencyProperty FormattedAnimatedValueProperty =
             DependencyProperty.Register("FormattedAnimatedValue", typeof(string), typeof(RadialGaugePiece),
             new PropertyMetadata(null));
@@ -296,6 +300,12 @@
         {
             get { return (double)GetValue(MaximumProperty); }
             set { SetValue(MaximumProperty, value); }
+        }
+
+        public string Unit
+        {
+            get { return (string)GetValue(UnitProperty); }
+            set { SetValue(UnitProperty, value); }
         }
 
         public double FormattedAnimatedValue
